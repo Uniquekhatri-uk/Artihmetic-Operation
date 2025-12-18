@@ -1,0 +1,190 @@
+@prefix : <http://example.org/arithmetic-its#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/arithmetic-its#> .
+
+<http://example.org/arithmetic-its#ArithmeticITS> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/arithmetic-its#hasCommonError
+:hasCommonError rdf:type owl:ObjectProperty ;
+                rdfs:domain :Operation ;
+                rdfs:range :ErrorType .
+
+
+###  http://example.org/arithmetic-its#hasRule
+:hasRule rdf:type owl:ObjectProperty ;
+         rdfs:domain :Operation ;
+         rdfs:range :ArithmeticRule .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://example.org/arithmetic-its#errorHint
+:errorHint rdf:type owl:DatatypeProperty ;
+           rdfs:domain :ErrorType ;
+           rdfs:range xsd:string .
+
+
+###  http://example.org/arithmetic-its#errorName
+:errorName rdf:type owl:DatatypeProperty ;
+           rdfs:domain :ErrorType ;
+           rdfs:range xsd:string .
+
+
+###  http://example.org/arithmetic-its#exampleProblem
+:exampleProblem rdf:type owl:DatatypeProperty ;
+                rdfs:domain :ArithmeticRule ;
+                rdfs:range xsd:string .
+
+
+###  http://example.org/arithmetic-its#exampleSteps
+:exampleSteps rdf:type owl:DatatypeProperty ;
+              rdfs:domain :ArithmeticRule ;
+              rdfs:range xsd:string .
+
+
+###  http://example.org/arithmetic-its#ruleName
+:ruleName rdf:type owl:DatatypeProperty ;
+          rdfs:domain :ArithmeticRule ;
+          rdfs:range xsd:string .
+
+
+###  http://example.org/arithmetic-its#ruleText
+:ruleText rdf:type owl:DatatypeProperty ;
+          rdfs:domain :ArithmeticRule ;
+          rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/arithmetic-its#Addition
+:Addition rdf:type owl:Class ;
+          rdfs:subClassOf :Operation .
+
+
+###  http://example.org/arithmetic-its#ArithmeticRule
+:ArithmeticRule rdf:type owl:Class .
+
+
+###  http://example.org/arithmetic-its#Division
+:Division rdf:type owl:Class ;
+          rdfs:subClassOf :Operation .
+
+
+###  http://example.org/arithmetic-its#ErrorType
+:ErrorType rdf:type owl:Class .
+
+
+###  http://example.org/arithmetic-its#Multiplication
+:Multiplication rdf:type owl:Class ;
+                rdfs:subClassOf :Operation .
+
+
+###  http://example.org/arithmetic-its#Operation
+:Operation rdf:type owl:Class .
+
+
+###  http://example.org/arithmetic-its#ProblemType
+:ProblemType rdf:type owl:Class .
+
+
+###  http://example.org/arithmetic-its#Subtraction
+:Subtraction rdf:type owl:Class ;
+             rdfs:subClassOf :Operation .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://example.org/arithmetic-its#Add
+:Add rdf:type owl:NamedIndividual ,
+              :Addition ;
+     :hasCommonError :err_wrong_operation ;
+     :hasRule :rule_addition .
+
+
+###  http://example.org/arithmetic-its#Divide
+:Divide rdf:type owl:NamedIndividual ,
+                 :Division ;
+        :hasCommonError :err_divide_by_zero ,
+                        :err_wrong_operation ;
+        :hasRule :rule_division .
+
+
+###  http://example.org/arithmetic-its#Multiply
+:Multiply rdf:type owl:NamedIndividual ,
+                   :Multiplication ;
+          :hasCommonError :err_wrong_operation ;
+          :hasRule :rule_multiplication .
+
+
+###  http://example.org/arithmetic-its#Subtract
+:Subtract rdf:type owl:NamedIndividual ,
+                   :Subtraction ;
+          :hasCommonError :err_wrong_operation ;
+          :hasRule :rule_subtraction .
+
+
+###  http://example.org/arithmetic-its#err_divide_by_zero
+:err_divide_by_zero rdf:type owl:NamedIndividual ,
+                             :ErrorType ;
+                    :errorHint "Division by zero is undefined. The divisor must be non-zero." ;
+                    :errorName "DivideByZero" .
+
+
+###  http://example.org/arithmetic-its#err_wrong_operation
+:err_wrong_operation rdf:type owl:NamedIndividual ,
+                              :ErrorType ;
+                     :errorHint "Use keywords: total/altogether → add; remain/left → subtract; each/equal groups → multiply or divide; shared equally → divide." ;
+                     :errorName "WrongOperation" .
+
+
+###  http://example.org/arithmetic-its#rule_addition
+:rule_addition rdf:type owl:NamedIndividual ,
+                        :ArithmeticRule ;
+               :exampleProblem "What is 7 + 5?" ;
+               :exampleSteps "Step 1: Identify 7 and 5. Step 2: Add: 7 + 5 = 12." ;
+               :ruleName "Addition rule" ;
+               :ruleText "Addition combines two or more quantities to make a total." .
+
+
+###  http://example.org/arithmetic-its#rule_division
+:rule_division rdf:type owl:NamedIndividual ,
+                        :ArithmeticRule ;
+               :exampleProblem "12 sweets shared equally among 4 children. Each gets?" ;
+               :exampleSteps "Step 1: Total 12. Step 2: 12 ÷ 4 = 3." ;
+               :ruleName "Division rule" ;
+               :ruleText "Division splits a total into equal parts." .
+
+
+###  http://example.org/arithmetic-its#rule_multiplication
+:rule_multiplication rdf:type owl:NamedIndividual ,
+                              :ArithmeticRule ;
+                     :exampleProblem "6 boxes have 4 items each. How many items total?" ;
+                     :exampleSteps "Step 1: 6 groups of 4. Step 2: 6 × 4 = 24." ;
+                     :ruleName "Multiplication rule" ;
+                     :ruleText "Multiplication is repeated addition for equal groups." .
+
+
+###  http://example.org/arithmetic-its#rule_subtraction
+:rule_subtraction rdf:type owl:NamedIndividual ,
+                           :ArithmeticRule ;
+                  :exampleProblem "Ali has 10 apples and gives away 3. How many remain?" ;
+                  :exampleSteps "Step 1: Start with 10. Step 2: Take away 3: 10 - 3 = 7." ;
+                  :ruleName "Subtraction rule" ;
+                  :ruleText "Subtraction finds how much remains after taking away." .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
